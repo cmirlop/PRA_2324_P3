@@ -1,3 +1,4 @@
+
 #ifndef BSTREEDICT_H
 #define BSTREEDICT_H
 
@@ -21,25 +22,31 @@ class BSTreeDict: public Dict<V> {
 		delete tree;
 	}
 	friend std::ostream& operator<<(std::ostream &out, const BSTreeDict<V> &bs){
-		out << bs.tree;
+		//for(int x=0;x < bs.tree->size();x++){
+		//	out << bs.tree[x] << " ";
+		//}
+		out << bs.tree[0];
 		return out;
 	}        
 	V operator[](std::string key){
-		return tree->search(key);
+		return search(key);
 	}
 	
 	//Metodos heredados
 	virtual void insert(std::string key, V value) override{
-		TableEntry<V>* aux(key,value);
+		TableEntry<V> aux(key,value);
 		tree -> insert(aux);	
 	}
 	virtual V search(std::string key) override{
-		return tree -> search(key);
+		TableEntry<V> aux = tree->search(key);
+		return aux.value;
 	}
 	virtual V remove(std::string key)override{
-		return tree->remove(key);
+		V aux = search(key);
+		tree->remove(key);
+		return aux;
 	}
-	virtual int entrie() override{
+	virtual int entries() override{
 		return tree->size();
 	}
 };
